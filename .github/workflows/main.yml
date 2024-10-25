@@ -11,4 +11,23 @@ jobs:
               run: ci/unit-test-app.sh
             - name: Run the build script
               run: ci/build-app.sh
+            - name: Upload the build artifact
+              uses: actions/upload-artifact@v2
+              with:
+                  name: code
+                  path: .
+    Linting:
+        runs-on: ubuntu-latest
+        needs: Build
+        steps:
+            - name: Download the code
+              uses: actions/download-artifact@v2
+              with:
+                  name: code
+                  path: .
+            - name: Run the linting script
+              uses: super-linter/super-linter/slim
+              with:
+                    DEFAULT_BRANCH: main
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             
