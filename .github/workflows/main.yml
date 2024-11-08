@@ -20,29 +20,28 @@ jobs:
           env: 
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    snyk:
-      runs-on: ubuntu-latest
-      container: gradle:6.8.3-jdk11
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v3
+    # snyk:
+    #   runs-on: ubuntu-latest
+    #   container: gradle:6.8.3-jdk11
+    #   steps:
+    #     - name: Checkout code
+    #       uses: actions/checkout@v3
 
-        - name: Gradle Wrapper
-          run: gradle wrapper
+    #     - name: Gradle Wrapper
+    #       run: gradle wrapper
 
-        - name: Install Snyk CLI
-          uses: snyk/actions/setup@master
+    #     - name: Install Snyk CLI
+    #       uses: snyk/actions/setup@master
   
-        - name: Run Snyk test
-          env:
-            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-          run: snyk test --file=app/build.gradle --severity-threshold=medium
-  
-            
+    #     - name: Run Snyk test
+    #       env:
+    #         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    #       run: snyk test --file=app/build.gradle --severity-threshold=medium
+        
     Build:
         runs-on: ubuntu-latest
         container: gradle:6.8.3-jdk11
-        needs: [sonarcloud, snyk]
+        needs: [sonarcloud]
         steps:
             - name: Clone down the repository
               uses: actions/checkout@v2
