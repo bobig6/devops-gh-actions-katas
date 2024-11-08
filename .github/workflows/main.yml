@@ -30,7 +30,7 @@ jobs:
             SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
             DEBUG: '*snyk*'
           with:
-            args: --file=../app/build.gradle --package-manager=gradle
+            args: --all-projects --package-manager=gradle
             
     Build:
         runs-on: ubuntu-latest
