@@ -5,23 +5,25 @@ env:
     docker_password: ${{ secrets.GITHUB_TOKEN }}
     GIT_COMMIT: ${{ github.sha }}
 jobs:
-    # sonarcloud:
-    #   name: SonarCloud
-    #   runs-on: ubuntu-latest
-    #   steps:
-    #     - uses: actions/checkout@v3
-    #       with:
-    #         fetch-depth: 0  
-    #     - name: Run the build script
-    #       run: ci/build-app.sh
-    #     - name: SonarCloud Scan
-    #       uses: SonarSource/sonarcloud-github-action@master
-    #       env: 
-    #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-    #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    sonarcloud:
+      name: SonarCloud
+      runs-on: ubuntu-latest
+      container: gradle:6.8.3-jdk11
+      steps:
+        - uses: actions/checkout@v3
+          with:
+            fetch-depth: 0  
+        - name: Run the build script
+          run: ci/build-app.sh
+        - name: SonarCloud Scan
+          uses: SonarSource/sonarcloud-github-action@master
+          env: 
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     Build:
         runs-on: ubuntu-latest
         container: gradle:6.8.3-jdk11
+        needs: sonarcloud
         steps:
             - name: Clone down the repository
               uses: actions/checkout@v2
