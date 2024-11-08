@@ -30,7 +30,7 @@ jobs:
             SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
             DEBUG: '*snyk*'
           with:
-            args: --all-projects
+            args: --workdir=./
             
     Build:
         runs-on: ubuntu-latest
