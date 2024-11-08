@@ -20,6 +20,14 @@ jobs:
           env: 
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    snyk:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@master
+        - name: Run Snyk to check for vulnerabilities
+          uses: snyk/actions/gradle-jdk11@master
+          env:
+            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
     Build:
         runs-on: ubuntu-latest
         container: gradle:6.8.3-jdk11
