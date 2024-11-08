@@ -31,7 +31,7 @@ jobs:
             SNYK_PROJECT_DIR: '../app/'
             DEBUG: '*snyk*'
           with:
-            args: --all-projects --file=build.gradle --package-manager=gradle
+            args: --file=build.gradle --package-manager=gradle
             
     Build:
         runs-on: ubuntu-latest
