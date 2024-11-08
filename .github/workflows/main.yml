@@ -28,11 +28,13 @@ jobs:
           uses: snyk/actions/gradle-jdk11@master
           env:
             SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-            SNYK_PROJECT_DIR: '../app/'
+            SNYK_PROJECT_DIR: '../'
+          with:
+            args: --all-projects
     Build:
         runs-on: ubuntu-latest
         container: gradle:6.8.3-jdk11
-        needs: sonarcloud
+        needs: [sonarcloud, snyk]
         steps:
             - name: Clone down the repository
               uses: actions/checkout@v2
